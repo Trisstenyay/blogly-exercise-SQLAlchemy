@@ -4,6 +4,18 @@
 
 {% block content %}
 <h1>{{user.first_name}} {{user.last_name}}</h1>
-<img src="{{user.image_url}}" alt="user avatar"/>
-<p><button><a href="/users/{{user.id}}/edit">Edit User</a></button></p>
+<img src="{{ user.image_url }}" alt="Profile Picture" style="max-width: 150px;">
+<h2>Posts:</h2>
+<ul>
+  {% for post in user.posts %}
+  <li>
+    <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+    <a href="/posts/{{ post.id }}/edit">Edit</a>
+    <form action="/posts/{{ post.id }}/delete" method="POST" style="display: inline;">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+<a href="/users/{{ user.id }}/posts/new">Add Post</a>
 {% endblock %}
